@@ -1,0 +1,8 @@
+IV	WormBase	gene	7240145	7240445	.	-	.	gene_id "WBGene00017054"; gene_source "WormBase"; gene_biotype "protein_coding";
+V	WormBase	gene	8854793	8854993	.	-	.	gene_id "WBGene00017190"; gene_source "WormBase"; gene_biotype "protein_coding";
+V	WormBase	gene	17995147	17995347	.	-	.	gene_id "WBGene00013352"; gene_source "WormBase"; gene_biotype "protein_coding";
+I	WormBase	gene	15071866	15072266	.	-	.	gene_id "WBGene00201669"; gene_source "WormBase"; gene_biotype "ncRNA";
+III	WormBase	gene	525034	525234	.	-	.	gene_id "WBGene00020703"; gene_source "WormBase"; gene_biotype "protein_coding";
+III	WormBase	gene	851128	851328	.	-	.	gene_id "WBGene00019333"; gene_source "WormBase"; gene_biotype "protein_coding";
+III	WormBase	gene	6622476	6622676	.	-	.	gene_id "WBGene00015734"; gene_source "WormBase"; gene_biotype "protein_coding";
+X	WormBase	gene	15546488	15546688	.	-	.	gene_id "WBGene00007261"; gene_source "WormBase"; gene_biotype "protein_coding";

@@ -1,0 +1,1 @@
+cmd = HS_positive_control_upstream_500.fa worm OUT/HS_positive_control_upstream_500_OUT -fasta Random_Intergenic_500.fa

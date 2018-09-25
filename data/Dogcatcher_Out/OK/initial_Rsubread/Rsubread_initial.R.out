@@ -1,0 +1,260 @@
+
+R version 3.4.3 (2017-11-30) -- "Kite-Eating Tree"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #########################################################################################
+> #####Run Rsubread for counts
+> library(Rsubread);
+> 
+> files=c('BAMS/N2WT_INP_.bam', 'BAMS/OK803-INP__.bam', 'BAMS/N2-J2-1_.bam', 'BAMS/N2-J2-2_.bam', 'BAMS/N2-J2-3_.bam', 'BAMS/OK803-J2-1_.bam', 'BAMS/OK803-J2-2_.bam', 'BAMS/OK803-J2-3_.bam')
+> 
+> gtf=("input_files/gtf/c_elegans.PRJNA13758.WS258.canonical_geneset.gtf")
+> 
+> ###Sense Unique
+> sense=featureCounts(files,
++ isGTFAnnotationFile = TRUE,
++ annot.ext = gtf,
++ GTF.attrType = "gene_id",
++ allowMultiOverlap = TRUE,
++ nthreads = 4,
++ countMultiMappingReads=TRUE,
++ strandSpecific = 1)
+
+        ==========     _____ _    _ ____  _____  ______          _____  
+        =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+          =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+            ====      \___ \| |  | |  _ <|  _  /|  __|   / /\ \ | |  | |
+              ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+        ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+       Rsubread 1.28.1
+
+//========================== featureCounts setting ===========================\\
+||                                                                            ||
+||             Input files : 8 BAM files                                      ||
+||                           S BAMS/N2WT_INP_.bam                             ||
+||                           S BAMS/OK803-INP__.bam                           ||
+||                           S BAMS/N2-J2-1_.bam                              ||
+||                           S BAMS/N2-J2-2_.bam                              ||
+||                           S BAMS/N2-J2-3_.bam                              ||
+||                           S BAMS/OK803-J2-1_.bam                           ||
+||                           S BAMS/OK803-J2-2_.bam                           ||
+||                           S BAMS/OK803-J2-3_.bam                           ||
+||                                                                            ||
+||      Dir for temp files : .                                                ||
+||                 Threads : 4                                                ||
+||                   Level : meta-feature level                               ||
+||              Paired-end : no                                               ||
+||         Strand specific : stranded                                         ||
+||      Multimapping reads : counted                                          ||
+|| Multi-overlapping reads : counted                                          ||
+||   Min overlapping bases : 1                                                ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+//================================= Running ==================================\\
+||                                                                            ||
+|| Load annotation file input_files/gtf/c_elegans.PRJNA13758.WS258.canoni ... ||
+||    Features : 268873                                                       ||
+||    Meta-features : 46760                                                   ||
+||    Chromosomes/contigs : 7                                                 ||
+||                                                                            ||
+|| Process BAM file BAMS/N2WT_INP_.bam...                                     ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 81280268                                                  ||
+||    Successfully assigned reads : 79199176 (97.4%)                          ||
+||    Running time : 3.57 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-INP__.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 48424124                                                  ||
+||    Successfully assigned reads : 46453950 (95.9%)                          ||
+||    Running time : 2.43 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/N2-J2-1_.bam...                                      ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46123361                                                  ||
+||    Successfully assigned reads : 44823856 (97.2%)                          ||
+||    Running time : 1.96 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/N2-J2-2_.bam...                                      ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46759472                                                  ||
+||    Successfully assigned reads : 45403395 (97.1%)                          ||
+||    Running time : 1.94 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/N2-J2-3_.bam...                                      ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 38672590                                                  ||
+||    Successfully assigned reads : 37422468 (96.8%)                          ||
+||    Running time : 1.79 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-J2-1_.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 47990776                                                  ||
+||    Successfully assigned reads : 47200344 (98.4%)                          ||
+||    Running time : 2.47 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-J2-2_.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 29492569                                                  ||
+||    Successfully assigned reads : 28611133 (97.0%)                          ||
+||    Running time : 1.75 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-J2-3_.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 29969447                                                  ||
+||    Successfully assigned reads : 29433196 (98.2%)                          ||
+||    Running time : 1.83 minutes                                             ||
+||                                                                            ||
+||                         Read assignment finished.                          ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+> 
+> write.table(x=data.frame(
++ sense$annotation[,c("GeneID","Length")],
++ sense$counts,stringsAsFactors=FALSE),
++ file="OK_LFC_FLIPPED_DOG_2ndtime/initial_Rsubread/Rsubread_sense.txt",
++ quote=FALSE,sep="\t",row.names=FALSE)
+> 
+> ###Anti-sense 
+> antisense=featureCounts(files,
++ isGTFAnnotationFile = TRUE,
++ annot.ext = gtf,
++ GTF.attrType = "gene_id",
++ allowMultiOverlap = TRUE,
++ countMultiMappingReads=TRUE,
++ nthreads = 4,
++ strandSpecific = 2)
+
+        ==========     _____ _    _ ____  _____  ______          _____  
+        =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+          =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+            ====      \___ \| |  | |  _ <|  _  /|  __|   / /\ \ | |  | |
+              ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+        ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+       Rsubread 1.28.1
+
+//========================== featureCounts setting ===========================\\
+||                                                                            ||
+||             Input files : 8 BAM files                                      ||
+||                           S BAMS/N2WT_INP_.bam                             ||
+||                           S BAMS/OK803-INP__.bam                           ||
+||                           S BAMS/N2-J2-1_.bam                              ||
+||                           S BAMS/N2-J2-2_.bam                              ||
+||                           S BAMS/N2-J2-3_.bam                              ||
+||                           S BAMS/OK803-J2-1_.bam                           ||
+||                           S BAMS/OK803-J2-2_.bam                           ||
+||                           S BAMS/OK803-J2-3_.bam                           ||
+||                                                                            ||
+||      Dir for temp files : .                                                ||
+||                 Threads : 4                                                ||
+||                   Level : meta-feature level                               ||
+||              Paired-end : no                                               ||
+||         Strand specific : reversely stranded                               ||
+||      Multimapping reads : counted                                          ||
+|| Multi-overlapping reads : counted                                          ||
+||   Min overlapping bases : 1                                                ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+//================================= Running ==================================\\
+||                                                                            ||
+|| Load annotation file input_files/gtf/c_elegans.PRJNA13758.WS258.canoni ... ||
+||    Features : 268873                                                       ||
+||    Meta-features : 46760                                                   ||
+||    Chromosomes/contigs : 7                                                 ||
+||                                                                            ||
+|| Process BAM file BAMS/N2WT_INP_.bam...                                     ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 81280268                                                  ||
+||    Successfully assigned reads : 2646901 (3.3%)                            ||
+||    Running time : 4.05 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-INP__.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 48424124                                                  ||
+||    Successfully assigned reads : 2762003 (5.7%)                            ||
+||    Running time : 2.48 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/N2-J2-1_.bam...                                      ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46123361                                                  ||
+||    Successfully assigned reads : 3419197 (7.4%)                            ||
+||    Running time : 2.01 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/N2-J2-2_.bam...                                      ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46759472                                                  ||
+||    Successfully assigned reads : 3890667 (8.3%)                            ||
+||    Running time : 2.07 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/N2-J2-3_.bam...                                      ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 38672590                                                  ||
+||    Successfully assigned reads : 3418715 (8.8%)                            ||
+||    Running time : 1.75 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-J2-1_.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 47990776                                                  ||
+||    Successfully assigned reads : 3779047 (7.9%)                            ||
+||    Running time : 2.65 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-J2-2_.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 29492569                                                  ||
+||    Successfully assigned reads : 2504816 (8.5%)                            ||
+||    Running time : 1.41 minutes                                             ||
+||                                                                            ||
+|| Process BAM file BAMS/OK803-J2-3_.bam...                                   ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 29969447                                                  ||
+||    Successfully assigned reads : 2608104 (8.7%)                            ||
+||    Running time : 1.41 minutes                                             ||
+||                                                                            ||
+||                         Read assignment finished.                          ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+> 
+> write.table(x=data.frame(
++ antisense$annotation[,c("GeneID","Length")],
++ antisense$counts,stringsAsFactors=FALSE),
++ file="OK_LFC_FLIPPED_DOG_2ndtime/initial_Rsubread/Rsubread_antisense.txt",
++ quote=FALSE,sep="\t",row.names=FALSE)
+> 
+> proc.time()
+    user   system  elapsed 
+2644.257  157.683 2142.490 

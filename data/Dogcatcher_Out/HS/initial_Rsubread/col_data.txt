@@ -1,0 +1,8 @@
+	condition	assay
+X.BAMS.N2WT_INP_.bam	C	T
+X.BAMS.N2HS_INP_.bam	T	T
+X.BAMS.N2.J2.1_.bam	C	J
+X.BAMS.N2.J2.2_.bam	C	J
+X.BAMS.N2.J2.3_.bam	C	J
+X.BAMS.N2HS_J2A_.bam	T	J
+X.BAMS.N2HS_J2B_.bam	T	J
