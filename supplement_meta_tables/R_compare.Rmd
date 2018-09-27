@@ -1,0 +1,17 @@
+---
+title: "read_dataframe"
+output: html_document
+---
+
+
+```{r}
+# df <- read.delim2("~/Google_Drive/Scripts/runion/compare_datasets/Meta_comparison_DOGS.tsv")
+# dfo <- read.delim2("~/Google_Drive/Scripts/runion/compare_datasets/Meta_comparison_antisense_overlapped.tsv")
+
+dfo <- read.delim2("Meta_comparison_antisense_overlapped.tsv")
+
+# dfhsdogs <- read.delim2("~/Google_Drive/Scripts/hs/worm/EMBO/Runion_with_normalization_compleete/Runion_TDP1_HS_and_bams_with_J2_normalization_and_total/HEATSHOCK_LFC_FLIPPED_DOG_2ndtime/N2_vs_HS_2ndtime/FINAL_OUT/All/DOG/biotypes/combined_DOG_with_biotypes.csv")
+# 
+# dfhsdogs2 <- read.delim2("~/Google_Drive/Scripts/hs/worm/EMBO/Runion_with_normalization_compleete/Runion_TDP1_HS_and_bams_with_J2_normalization_and_total/HEATSHOCK_LFC_FLIPPED_DOG_2ndtimeDEBUG/DOG/csv/N2HS_J2A_split_II_min_gtf_DOG.csv")
+```
+

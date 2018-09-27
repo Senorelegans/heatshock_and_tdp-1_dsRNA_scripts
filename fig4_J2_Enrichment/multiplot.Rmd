@@ -77,21 +77,24 @@ data <- df
   hsj2 <- ggplot(data, aes(x = log2baseMean, y = log2FoldChange, shape=shape)) +
     geom_point(aes(color = factor(color)), size = 1.75, alpha = 0.6, na.rm = T) + # add gene points
     xlim(4, 20) +
+    
     theme_bw(base_size = 15) + # clean up theme
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Sense HS ") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (HS / WT)")) + # y-axis label
     #scale_x_continuous(expand = c(0, 0))#, limits = c(0, 15)) +
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
+    annotate("text",  x=Inf, y = Inf, label = "Heat shock Sense", vjust=1, hjust=1, size=5, fontface="bold") +
     scale_color_manual(values = c("Treated" = "red", 
                                   "Untreated" = "#3182bd", 
                                   "dsrna" = "green",
                                   "none" = "#636363")) # change colors
-  # Plot figure
-  # colored
 
+  
+  
+  
   
   file="HS/DESeq2_senseunique_cleaned_plot.png"
   
@@ -133,9 +136,10 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Anti-Sense HS ") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (HS / WT)")) + # y-axis label
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
+    annotate("text",  x=Inf, y = Inf, label = "Heat shock Antisense", vjust=1, hjust=1, size=5, fontface="bold") +
     scale_color_manual(values = c("Treated" = "red", 
                                   "Untreated" = "#3182bd", 
                                   "dsrna" = "green",
@@ -185,10 +189,11 @@ data <- df
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Sense \ntdp-1(ok803)") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (tdp-1 / WT)")) + # y-axis label
     #scale_x_continuous(expand = c(0, 0))#, limits = c(0, 15)) +
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
+    annotate("text",  x=Inf, y = Inf, label = "tdp-1(ok803) Sense", vjust=1, hjust=1, size=5, fontface="bold") +
     scale_color_manual(values = c("Treated" = "purple", 
                                   "Untreated" = "#3182bd", 
                                   "dsrna" = "green",
@@ -236,9 +241,10 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Anti-Sense \ntdp-1(ok803)") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (tdp-1 / WT)")) + # y-axis label
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
+    annotate("text",  x=Inf, y = Inf, label = "tdp-1(ok803) Antisense", vjust=1, hjust=1, size=5, fontface="bold") +
     scale_color_manual(values = c("Treated" = "purple", 
                                   "Untreated" = "#3182bd", 
                                   "dsrna" = "green",
@@ -289,8 +295,9 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Sense HS dsRNA ") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (HS / WT)")) + # y-axis label
     #scale_x_continuous(expand = c(0, 0))#, limits = c(0, 15)) +
+    annotate("text",  x=Inf, y = Inf, label = "Heat shock Sense", vjust=1, hjust=1, size=5, fontface="bold") +
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
     scale_color_manual(values = c("Treated" = "red", 
@@ -340,7 +347,8 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Anti-Sense HS dsRNA ") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (HS / WT)")) + # y-axis label
+    annotate("text",  x=Inf, y = Inf, label = "Heat shock Antisense", vjust=1, hjust=1, size=5, fontface="bold") +
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
     scale_color_manual(values = c("Treated" = "red", 
@@ -386,10 +394,11 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Sense \ntdp-1(ok803)") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (tdp-1 / WT)")) + # y-axis label
     #scale_x_continuous(expand = c(0, 0))#, limits = c(0, 15)) +
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
+    annotate("text",  x=Inf, y = Inf, label = "tdp-1(ok803) Sense", vjust=1, hjust=1, size=5, fontface="bold") +
     scale_color_manual(values = c("Treated" = "purple", 
                                   "Untreated" = "#3182bd", 
                                   "dsrna" = "green",
@@ -438,9 +447,10 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
     theme(legend.position = "none") + # remove legend 
     # ggtitle(label = "J2 Anti-Sense \ntdp-1(ok803)") +  # add title
     xlab(expression("log2baseMean")) + # x-axis label
-    ylab(expression("log2FoldChange")) + # y-axis label
+    ylab(expression("log2FoldChange (tdp-1 / WT)")) + # y-axis label
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = 0, colour = "black") + # p(0.05) = 1.3
+    annotate("text",  x=Inf, y = Inf, label = "tdp-1(ok803) Antisense", vjust=1, hjust=1, size=5, fontface="bold") +
     scale_color_manual(values = c("Treated" = "purple", 
                                   "Untreated" = "#3182bd", 
                                   "dsrna" = "green",
@@ -463,8 +473,8 @@ df$shape[(abs(df$log2baseMean) > 1000000)] <- "triangle"
 # "~/Google_Drive/Scripts/hs/worm/EMBO/writeup/Figures/fig4_J2_Enrichment/fig4.5_J2_Enrichment_GOTERM/SenseVenn.png"
 
 
-SV <- ggdraw() + draw_image("fig4.5_J2_Enrichment_GOTERM/SenseVenn.png", scale = 0.9)
-AV <- ggdraw() + draw_image("fig4.5_J2_Enrichment_GOTERM/AntisenseVenn.png", scale = 0.9)
+SV <- ggdraw() + draw_image("fig4.5_J2_Enrichment_Venn/SenseVenn.png", scale = 0.9)
+AV <- ggdraw() + draw_image("fig4.5_J2_Enrichment_Venn/AntisenseVenn.png", scale = 0.9)
 ```
 
 
@@ -488,7 +498,7 @@ save_plot("MULTIPLOT_unique_cleaned_plot.png", plot2by2,
 ```{r}
 #Plots for masters defense
 
-plot2by2 <- plot_grid(hsj2, hsj2a,dshsj2, dshsj2a,ncol = 2)
+plot2by2 <- plot_grid(hsj2, hsj2a,dshsj2, dshsj2a,ncol = 2,labels="AUTO")
 save_plot("MULTIPLOT_masters_heatshock.png", plot2by2,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
@@ -496,7 +506,7 @@ save_plot("MULTIPLOT_masters_heatshock.png", plot2by2,
           base_aspect_ratio = 1.3
           )
 
-plot2by2 <- plot_grid(okj2, okj2a)
+plot2by2 <- plot_grid(okj2, okj2a,labels="AUTO")
 save_plot("MULTIPLOT_masters_ok_enrichment.png", plot2by2,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 1, # and 2 rows
@@ -505,7 +515,7 @@ save_plot("MULTIPLOT_masters_ok_enrichment.png", plot2by2,
           )
 
 
-plot2by2 <- plot_grid(hsj2, okj2)
+plot2by2 <- plot_grid(hsj2, okj2,labels="AUTO")
 save_plot("MULTIPLOT_masters_hs_ok_sense.png", plot2by2,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 1, # and 2 rows
@@ -514,7 +524,7 @@ save_plot("MULTIPLOT_masters_hs_ok_sense.png", plot2by2,
           )
 
 
-plot2by2 <- plot_grid(hsj2a, okj2a)
+plot2by2 <- plot_grid(hsj2a, okj2a,labels="AUTO")
 save_plot("MULTIPLOT_masters_hs_ok_antisense.png", plot2by2,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 1, # and 2 rows
@@ -522,7 +532,7 @@ save_plot("MULTIPLOT_masters_hs_ok_antisense.png", plot2by2,
           base_aspect_ratio = 1.3
           )
 
-plot2by2 <- plot_grid(okj2, okj2a,dsokj2, dsokj2a,ncol = 2)
+plot2by2 <- plot_grid(okj2, okj2a,dsokj2, dsokj2a,ncol = 2,labels="AUTO")
 save_plot("MULTIPLOT_masters_OK.png", plot2by2,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
