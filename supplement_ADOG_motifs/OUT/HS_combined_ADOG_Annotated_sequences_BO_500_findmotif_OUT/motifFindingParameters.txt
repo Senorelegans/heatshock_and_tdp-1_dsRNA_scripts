@@ -1,1 +1,0 @@
-cmd = HS_combined_ADOG_Annotated_sequences_BO_500.fa worm OUT/HS_combined_ADOG_Annotated_sequences_BO_500_findmotif_OUT -fasta Random_Intergenic_500.fa
