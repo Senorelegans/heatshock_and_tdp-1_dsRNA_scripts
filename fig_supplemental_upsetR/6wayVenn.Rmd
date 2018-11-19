@@ -1,0 +1,335 @@
+---
+title: "6wayVenn"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+require("VennDiagram")
+library(dplyr) # ggplot2 addon for better labels
+
+library(cowplot)
+library(magick)
+library(here)
+```
+
+
+
+# THIS FUNCTION HELPS PLOTTING MULTIPLE FIGURES
+```{r}
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL, title="", 
+                      fontsize = 12, fontfamily = "Helvetica") {
+  require(grid)
+ 
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+ 
+  numPlots = length(plots)
+ 
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+ 
+  if (nchar(title)>0){
+    layout <- rbind(rep(0, ncol(layout)), layout)
+  }
+ 
+  if (numPlots==1) {
+    print(plots[[1]])
+ 
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), 
+                          ncol(layout), 
+                          heights = if (nchar(title)>0) {unit(c(0.5, rep(5,nrow(layout)-1)), "null")}
+                          else {unit(c(rep(5, nrow(layout))), "null")})))
+ 
+    # Make each plot, in the correct location
+    if (nchar(title)>0) {
+      grid.text(title, 
+                vp = viewport(layout.pos.row = 1, layout.pos.col = 1:ncol(layout)),
+                gp = gpar(fontsize = fontsize, fontfamily = fontfamily))
+    }
+ 
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+ 
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+
+
+
+
+
+```{r}
+returnVenn = function(df1, df2, venn_title, color1, color2, vennlabel1, vennlabel2) {
+  df_merge = merge(df1, df2, by = "X")
+  df1_only = df1[!(df1$X %in% df2$X),]
+  df2_only = df2[!(df2$X %in% df1$X),]
+  L1 = nrow(df1_only)
+  L2 = nrow(df2_only)
+  Lmerge = nrow(df_merge)
+  g = draw.pairwise.venn(L1, L2, Lmerge,
+                         category = c(vennlabel1, vennlabel2),
+                         scaled = FALSE,
+                         fill = c(color1, color2),
+                         alpha = rep(0.5, 2),
+                         area1 = L1 +  Lmerge,
+                         area2 = L2 +  Lmerge,
+                         cross.area = Lmerge
+
+    ) 
+  g = gTree(children=g)
+  g <- arrangeGrob(g, ncol = 1, top=venn_title)   # Arrange grob
+  g = as_ggplot(g) # Turn to ggplot object
+
+}
+```
+
+
+
+#6 way venn
+```{r}
+install.packages("UpSetR")
+```
+
+```{r}
+library(UpSetR)
+```
+
+
+
+#### For all groups
+
+```{r}
+df <- read.csv( "df_for_pyupset.csv", header=T, sep = ",")
+```
+
+```{r}
+upset(df, sets = c('HS_J2', 'HS_INP', 'N2_J2', 'N2_INP', 'OK_J2', 'OK_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq")
+
+```
+
+
+```{r}
+
+
+
+
+png("Plot2.png", width=600, height=500, res=100)
+
+upset(df, sets = c('HS_J2', 'HS_INP','N2_J2', 'N2_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", text.scale = 1.5)
+
+hs_all <- ggdraw() + draw_image("Plot2.png")
+
+```
+
+```{r}
+hs_all
+```
+
+
+
+```{r}
+
+tiff("Plot3.png", width=600, height=500, res=100)
+upset(df, sets = c('OK_J2', 'OK_INP', 'N2_J2', 'N2_INP' ), sets.bar.color = "#56B4E9",
+order.by = "freq", text.scale = 1.5)
+
+ok_all <- ggdraw() + draw_image("Plot3.png")
+
+
+```
+
+
+```{r}
+upset(df, sets = c('HS_J2', 'HS_INP', 'OK_J2', 'OK_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", empty.intersections = "on")
+```
+
+
+
+###### Heat shock significant
+
+```{r}
+
+```
+
+
+```{r}
+tiff("Plot4.png", width=600, height=500, res=100)
+
+
+
+dfu <- read.csv( "df_for_pyupset_hs_significant_up.csv", header=T, sep = ",")
+upset(dfu, sets = c('HS_J2', 'HS_INP','N2_J2', 'N2_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", text.scale = 1.5)
+
+hs_up <- ggdraw() + draw_image("Plot4.png")
+
+```
+
+
+```{r}
+
+
+tiff("Plot5.png", width=600, height=500, res=100)
+
+
+
+dfd <- read.csv( "df_for_pyupset_hs_significant_do.csv", header=T, sep = ",")
+upset(dfd, sets = c('HS_J2', 'HS_INP','N2_J2', 'N2_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", text.scale = 1.5)
+
+
+
+
+```
+
+
+```{r}
+
+
+setwd("~/Google_Drive/Scripts/Dogcatcher/heatshock_and_tdp-1_dsRNA_scripts_copy/heatshock_and_tdp-1_dsRNA_scripts/fig_supplemental_upsetR")
+
+
+hs_all <- ggdraw() + draw_image("Plot2.png")
+ok_all <- ggdraw() + draw_image("Plot3.png")
+hs_up <- ggdraw() + draw_image("Plot4.png")
+hs_do <- ggdraw() + draw_image("Plot5.png")
+
+
+
+plot2by2 <- plot_grid(hs_all, ok_all, hs_up, hs_do,
+                      labels="AUTO", ncol = 2)
+save_plot("test.png", plot2by2,
+          ncol = 2, # we're saving a grid plot of 2 columns
+          nrow = 2, # and 2 rows
+          # each individual subplot should have an aspect ratio of 1.3
+          base_aspect_ratio = 1.3
+          )
+
+```
+
+
+
+
+```{r}
+?upset
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# For single samples
+
+```{r}
+df <- read.csv( "df_for_pyupset_Allsamples.csv", header=T, sep = ",")
+```
+
+```{r}
+upset(df, sets = c('N2HS_J2A',
+ 'N2HS_J2B',
+ 'N2HS_INP',
+ 'N2_J2_1',
+ 'N2_J2_2',
+ 'N2_J2_3',
+ 'N2WT_INP',
+ 'OK8_J2_1',
+ 'OK8_J2_2',
+ 'OK8_J2_3',
+ 'OK80_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", empty.intersections = "on")
+
+```
+
+```{r}
+upset(df, sets = c('N2HS_J2A',
+ 'N2HS_J2B',
+ 'N2HS_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", empty.intersections = "on")
+
+```
+
+
+```{r}
+upset(df, sets = c(
+  'N2WT_INP',
+ 'N2_J2_1',
+ 'N2_J2_2',
+ 'N2_J2_3'), sets.bar.color = "#56B4E9",
+order.by = "freq", empty.intersections = "on")
+
+```
+
+```{r}
+upset(df, sets = c(
+ 'OK8_J2_1',
+ 'OK8_J2_2',
+ 'OK8_J2_3',
+ 'OK80_INP'), sets.bar.color = "#56B4E9",
+order.by = "freq", empty.intersections = "on")
+
+```
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+gene_id_name	strand	gene_biotype_name	overlapped_gene	overlapped_biotype	same_or_opposite_strand
+WBGene00014376	-	tRNA	WBGene00200599	ncRNA	opposite
+WBGene00014376	-	tRNA	WBGene00009730	protein_coding	opposite
+WBGene00196396	-	ncRNA	WBGene00004512	rRNA	opposite
+WBGene00196396	-	ncRNA	WBGene00004567	rRNA	opposite
+WBGene00196396	-	ncRNA	WBGene00004622	rRNA	opposite

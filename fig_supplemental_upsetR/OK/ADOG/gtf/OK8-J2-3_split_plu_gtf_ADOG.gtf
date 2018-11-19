@@ -1,0 +1,3 @@
+I	WormBase	gene	2048913	2049113	.	+	.	gene_id "WBGene00219749"; gene_source "WormBase"; gene_biotype "lincRNA";
+I	WormBase	gene	15071033	15071333	.	+	.	gene_id "WBGene00004513"; gene_source "WormBase"; gene_biotype "rRNA";
+II	WormBase	gene	2261101	2261801	.	+	.	gene_id "WBGene00019586"; gene_source "WormBase"; gene_biotype "protein_coding";

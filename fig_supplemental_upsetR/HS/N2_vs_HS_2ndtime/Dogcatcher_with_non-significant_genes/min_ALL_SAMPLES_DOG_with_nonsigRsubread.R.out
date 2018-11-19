@@ -1,0 +1,258 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> #########################################################################################
+> #####Run Rsubread for counts
+> library(Rsubread);
+> 
+> files=c('BAMS/N2WT_INP_.bam', 'BAMS/N2HS_INP_.bam', 'BAMS/N2-J2-1_.bam', 'BAMS/N2-J2-2_.bam', 'BAMS/N2-J2-3_.bam', 'BAMS/N2HS_J2A_.bam', 'BAMS/N2HS_J2B_.bam')
+> 
+> gtf=("HEATSHOCK_LFC_FLIPPED_DOG_2ndtime/N2_vs_HS_2ndtime/Dogcatcher_with_non-significant_genes/min_ALL_SAMPLES_DOG_with_nonsig.gtf")
+> 
+> ###Sense Unique
+> sense=featureCounts(files,
++ isGTFAnnotationFile = TRUE,
++ annot.ext = gtf,
++ GTF.attrType = "gene_id",
++ allowMultiOverlap = TRUE,
++ nthreads = 4,
++ countMultiMappingReads=TRUE,
++ strandSpecific = 1)
+
+        ==========     _____ _    _ ____  _____  ______          _____  
+        =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+          =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+            ====      \___ \| |  | |  _ <|  _  /|  __|   / /\ \ | |  | |
+              ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+        ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+       Rsubread 1.30.5
+
+//========================== featureCounts setting ===========================\\
+||                                                                            ||
+||             Input files : 7 BAM files                                      ||
+||                           S N2WT_INP_.bam                                  ||
+||                           S N2HS_INP_.bam                                  ||
+||                           S N2-J2-1_.bam                                   ||
+||                           S N2-J2-2_.bam                                   ||
+||                           S N2-J2-3_.bam                                   ||
+||                           S N2HS_J2A_.bam                                  ||
+||                           S N2HS_J2B_.bam                                  ||
+||                                                                            ||
+||             Output file : .Rsubread_featureCounts_pid77989                 ||
+||                 Summary : .Rsubread_featureCounts_pid77989.summary         ||
+||              Annotation : min_ALL_SAMPLES_DOG_with_nonsig.gtf (GTF)        ||
+||      Dir for temp files : .                                                ||
+||                 Threads : 4                                                ||
+||                   Level : meta-feature level                               ||
+||              Paired-end : no                                               ||
+||         Strand specific : stranded                                         ||
+||      Multimapping reads : counted                                          ||
+|| Multi-overlapping reads : counted                                          ||
+||   Min overlapping bases : 1                                                ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+//================================= Running ==================================\\
+||                                                                            ||
+|| Load annotation file min_ALL_SAMPLES_DOG_with_nonsig.gtf ...               ||
+
+Warning: the feature on the 18037-th line has zero coordinate or zero lengths
+
+||    Features : 18229                                                        ||
+||    Meta-features : 18109                                                   ||
+||    Chromosomes/contigs : 6                                                 ||
+||                                                                            ||
+|| Process BAM file N2WT_INP_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 81280268                                                  ||
+||    Successfully assigned reads : 3433849 (4.2%)                            ||
+||    Running time : 1.86 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2HS_INP_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 163183685                                                 ||
+||    Successfully assigned reads : 5066551 (3.1%)                            ||
+||    Running time : 3.36 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2-J2-1_.bam...                                           ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46123361                                                  ||
+||    Successfully assigned reads : 2098469 (4.5%)                            ||
+||    Running time : 1.15 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2-J2-2_.bam...                                           ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46759472                                                  ||
+||    Successfully assigned reads : 1991110 (4.3%)                            ||
+||    Running time : 1.36 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2-J2-3_.bam...                                           ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 38672590                                                  ||
+||    Successfully assigned reads : 1785644 (4.6%)                            ||
+||    Running time : 0.90 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2HS_J2A_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 145105489                                                 ||
+||    Successfully assigned reads : 6523656 (4.5%)                            ||
+||    Running time : 3.64 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2HS_J2B_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 129449474                                                 ||
+||    Successfully assigned reads : 7481863 (5.8%)                            ||
+||    Running time : 3.34 minutes                                             ||
+||                                                                            ||
+||                         Read assignment finished.                          ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+> 
+> write.table(x=data.frame(
++ sense$annotation[,c("GeneID","Length")],
++ sense$counts,stringsAsFactors=FALSE),
++ file="HEATSHOCK_LFC_FLIPPED_DOG_2ndtime/N2_vs_HS_2ndtime/Dogcatcher_with_non-significant_genes/min_ALL_SAMPLES_DOG_with_nonsig_Dogcatcher_Rsubread_sense.txt",
++ quote=FALSE,sep="\t",row.names=FALSE)
+> 
+> ###Anti-sense 
+> antisense=featureCounts(files,
++ isGTFAnnotationFile = TRUE,
++ annot.ext = gtf,
++ GTF.attrType = "gene_id",
++ allowMultiOverlap = TRUE,
++ countMultiMappingReads=TRUE,
++ nthreads = 4,
++ strandSpecific = 2)
+
+        ==========     _____ _    _ ____  _____  ______          _____  
+        =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \ 
+          =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+            ====      \___ \| |  | |  _ <|  _  /|  __|   / /\ \ | |  | |
+              ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+        ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+       Rsubread 1.30.5
+
+//========================== featureCounts setting ===========================\\
+||                                                                            ||
+||             Input files : 7 BAM files                                      ||
+||                           S N2WT_INP_.bam                                  ||
+||                           S N2HS_INP_.bam                                  ||
+||                           S N2-J2-1_.bam                                   ||
+||                           S N2-J2-2_.bam                                   ||
+||                           S N2-J2-3_.bam                                   ||
+||                           S N2HS_J2A_.bam                                  ||
+||                           S N2HS_J2B_.bam                                  ||
+||                                                                            ||
+||             Output file : .Rsubread_featureCounts_pid77989                 ||
+||                 Summary : .Rsubread_featureCounts_pid77989.summary         ||
+||              Annotation : min_ALL_SAMPLES_DOG_with_nonsig.gtf (GTF)        ||
+||      Dir for temp files : .                                                ||
+||                 Threads : 4                                                ||
+||                   Level : meta-feature level                               ||
+||              Paired-end : no                                               ||
+||         Strand specific : reversely stranded                               ||
+||      Multimapping reads : counted                                          ||
+|| Multi-overlapping reads : counted                                          ||
+||   Min overlapping bases : 1                                                ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+//================================= Running ==================================\\
+||                                                                            ||
+|| Load annotation file min_ALL_SAMPLES_DOG_with_nonsig.gtf ...               ||
+
+Warning: the feature on the 18037-th line has zero coordinate or zero lengths
+
+||    Features : 18229                                                        ||
+||    Meta-features : 18109                                                   ||
+||    Chromosomes/contigs : 6                                                 ||
+||                                                                            ||
+|| Process BAM file N2WT_INP_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 81280268                                                  ||
+||    Successfully assigned reads : 60474443 (74.4%)                          ||
+||    Running time : 1.66 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2HS_INP_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 163183685                                                 ||
+||    Successfully assigned reads : 117292050 (71.9%)                         ||
+||    Running time : 2.68 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2-J2-1_.bam...                                           ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46123361                                                  ||
+||    Successfully assigned reads : 33714391 (73.1%)                          ||
+||    Running time : 0.90 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2-J2-2_.bam...                                           ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 46759472                                                  ||
+||    Successfully assigned reads : 34577921 (73.9%)                          ||
+||    Running time : 0.85 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2-J2-3_.bam...                                           ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 38672590                                                  ||
+||    Successfully assigned reads : 27926218 (72.2%)                          ||
+||    Running time : 0.74 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2HS_J2A_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 145105489                                                 ||
+||    Successfully assigned reads : 85481759 (58.9%)                          ||
+||    Running time : 2.69 minutes                                             ||
+||                                                                            ||
+|| Process BAM file N2HS_J2B_.bam...                                          ||
+||    Single-end reads are included.                                          ||
+||    Assign reads to features...                                             ||
+||    Total reads : 129449474                                                 ||
+||    Successfully assigned reads : 70106982 (54.2%)                          ||
+||    Running time : 2.42 minutes                                             ||
+||                                                                            ||
+||                         Read assignment finished.                          ||
+||                                                                            ||
+\\===================== http://subread.sourceforge.net/ ======================//
+
+> 
+> write.table(x=data.frame(
++ antisense$annotation[,c("GeneID","Length")],
++ antisense$counts,stringsAsFactors=FALSE),
++ file="HEATSHOCK_LFC_FLIPPED_DOG_2ndtime/N2_vs_HS_2ndtime/Dogcatcher_with_non-significant_genes/min_ALL_SAMPLES_DOG_with_nonsig_Dogcatcher_Rsubread_antisense.txt",
++ quote=FALSE,sep="\t",row.names=FALSE)
+> 
+> proc.time()
+    user   system  elapsed 
+3220.577  115.850 1671.636 

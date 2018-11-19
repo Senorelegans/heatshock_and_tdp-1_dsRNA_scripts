@@ -1,0 +1,4 @@
+V	WormBase	gene	9088780	9089280	.	-	.	gene_id "WBGene00002020"; gene_source "WormBase"; gene_biotype "protein_coding";
+V	WormBase	gene	10049547	10050047	.	-	.	gene_id "WBGene00010178"; gene_source "WormBase"; gene_biotype "protein_coding";
+I	WormBase	gene	13852667	13852867	.	-	.	gene_id "WBGene00189979"; gene_source "WormBase"; gene_biotype "ncRNA";
+I	WormBase	gene	15071566	15072266	.	-	.	gene_id "WBGene00201669"; gene_source "WormBase"; gene_biotype "ncRNA";
