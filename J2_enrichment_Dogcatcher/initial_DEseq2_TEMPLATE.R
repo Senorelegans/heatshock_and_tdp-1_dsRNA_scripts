@@ -42,7 +42,7 @@ sizeFactors(dds)=mylist$SF    #Makes the size factors for dds from the col_data 
 
 dds <- dds[ rowSums(counts(dds)) > 2,]   #Take everything over 2 because we added one in the normalization python steps
 
-dds$condition <- factor(dds$condition, levels=c("T","C"))
+dds$condition <- factor(dds$condition, levels=c("C","T"))
 dds <- DESeq(dds, test="LRT", reduced= ~ assay + condition, parallel = TRUE)
 res <- results(dds)
 write.csv(res, file="outputprefix/DESeq2_sense.csv")
@@ -67,7 +67,7 @@ sizeFactors(dds)=mylist$SF    #Makes the size factors for dds from the col_data 
 
 dds <- dds[ rowSums(counts(dds)) > 2,]   #Take everything over 2 because we added one in the normalization python steps
 
-dds$condition <- factor(dds$condition, levels=c("T","C"))
+dds$condition <- factor(dds$condition, levels=c("C","T"))
 dds <- DESeq(dds, test="LRT", reduced= ~ assay + condition, parallel = TRUE)
 res <- results(dds)
 write.csv(res, file="outputprefix/DESeq2_antisense.csv")
