@@ -422,3 +422,194 @@ df_final = pd.concat([df_HS, df_OK])
 
 df_final.to_csv("Meta_comparison_antisense_overlapped.tsv",sep="\t", index=None)
 
+
+
+
+
+
+
+
+
+################### Get all ribosomal genes ###########################
+# INPUT : WBGene dataframe is
+# WBgene | Reg name
+
+def genes_to_GO(df,colname, outname, species):
+    GeneID2nt_temp = {}
+    taxid = 0
+
+    if species == "human":
+        taxid = 9606
+        GeneID2nt_temp = GeneID2nt_mus
+    if species == "mouse":
+        taxid = 10090
+        GeneID2nt_temp = GeneID2nt_human
+    if species == "worm":
+        taxid = 6239
+        GeneID2nt_temp = GeneID2nt_worm
+
+    if len(df) < 1:
+        return 0, "NA"
+    mg = mygene.MyGeneInfo()
+    genelist = df[colname].tolist()
+    G = []
+    for gene in genelist:
+        if ("ENS") in gene:
+            if ("T") in gene:
+                tcl = [m.start() for m in re.finditer(r"\.",gene)]  #Tab count list
+                gene = gene[:tcl[0]]
+        G.append(gene)
+
+    df = pd.DataFrame(mg.querymany(G, scopes='ensembl.gene,ensembl.transcript,symbol,reporter,accession,retired,hgnc,entrezgene,name,wormbase', fields='entrezgene', species=taxid, as_dataframe=True))
+
+    # Remove ensembl or refseq without id's
+    print("Amount queryed: ", len(df))
+    df = df[df["_id"].str.contains("_") == False ]
+    df = df[df["_id"].str.contains("ENS") == False ]
+    df = df[df["_id"].str.contains("WB") == False ]
+    df["symbol"] = df.index
+    df["id"] = df["_id"]
+    df = df[["symbol","id"]]
+    print("Amount kept with id: ", len(df))
+    if len(df) < 1:
+        return 0, "NA"
+
+    ######################## GOA TOOLS ########################
+    obodag = GODag("go-basic.obo")
+    geneid2gos_species = read_ncbi_gene2go("gene2go", taxids=[taxid])
+    print(len(geneid2gos_species) ,  "annotated genes")
+
+    if species == "human":
+        goeaobj = GOEnrichmentStudy(
+            GeneID2nt_human.keys(), # List of species protein-coding genes
+            geneid2gos_species, # geneid/GO associations
+            obodag, # Ontologies
+            propagate_counts = False,
+            alpha = 0.05, # default significance cut-off
+            methods = ['fdr_bh']) # defult multipletest correction method
+    if species == "mouse":
+        goeaobj = GOEnrichmentStudy(
+            GeneID2nt_mus.keys(), # List of species protein-coding genes
+            geneid2gos_species, # geneid/GO associations
+            obodag, # Ontologies
+            propagate_counts = False,
+            alpha = 0.05, # default significance cut-off
+            methods = ['fdr_bh']) # defult multipletest correction method
+    if species == "worm":
+        goeaobj = GOEnrichmentStudy(
+                GeneID2nt_worm.keys(), # List of species protein-coding genes
+                geneid2gos_species, # geneid/GO associations
+                obodag, # Ontologies
+                propagate_counts = False,
+                alpha = 0.05, # default significance cut-off
+                methods = ['fdr_bh']) # defult multipletest correction method
+
+    # Data will be stored in this variable# Data
+    geneid2symbol = {}
+    for i in range(len(df)):
+        geneid2symbol[int(df["id"].iloc[i])] = df["symbol"].iloc[i]
+
+    # 'p_' means "pvalue". 'fdr_bh' is the multipletest method we are currently using.# 'p_'
+    geneids_study = geneid2symbol.keys()
+    goea_results_all = goeaobj.run_study(geneids_study)
+    goea_results_sig = [r for r in goea_results_all if r.p_fdr_bh < 0.05]
+
+    ######################################
+    #Change study_items back to gene names
+    goeaobj.wr_xlsx(outname + ".xlsx", goea_results_sig)
+    def studyitemToGene(genes):
+        if type(genes) == str:
+            genes = genes.split(",")
+            genes = [geneid2symbol[int(g)] for g in genes]
+            if species == "worm":
+                df = pd.DataFrame(mg.querymany(genes, scopes='ensembl.gene,ensembl.transcript,symbol,reporter,accession,retired,hgnc,entrezgene,name,wormbase', fields='symbol', species=taxid, as_dataframe=True))
+                genes = df["symbol"].tolist()
+                print(genes)
+            genes = ",".join(genes)
+            print("returned genes are ", genes)
+            return genes
+        else:
+            return ""
+
+    if os.path.isfile(outname + ".xlsx"):
+        df = pd.read_excel(outname + ".xlsx", index=None)
+        df["gene_id_names"] = df.apply(lambda row: studyitemToGene(row["study_items"]), axis=1)
+        del df["study_items"]
+        print(df["gene_id_names"])
+        df.to_excel(outname + ".xlsx")
+    ######################################
+
+    go_names = [r.name for r in goea_results_sig]
+    # print(len(go_names)) # Includes ONLY signficant results
+    word2cnt = cx.Counter([word for name in go_names for word in name.split()])
+    # Print 10 most common words found in significant GO term names
+    print(word2cnt.most_common(10))
+    freq_seen = ['RNA', 'translation', 'mitochond', 'ribosomal', 'ribosome']
+    freq_seen = ['translation','ribosomal', 'ribosome']
+
+    # Collect significant GOs for words in freq_seen (unordered)
+    word2siggos = cx.defaultdict(set)
+    # Loop through manually curated words of interest
+    for word in freq_seen:
+        # Check each significant GOEA result for the word of interest
+        for rec in goea_results_sig:
+            if word in rec.name:
+                word2siggos[word].add(rec.GO)
+    # Sort word2gos to have the same order as words in freq_seen
+    word2siggos = cx.OrderedDict([(w, word2siggos[w]) for w in freq_seen])
+
+    goid2goobj_all  = {nt.GO:nt.goterm for nt in goea_results_all}
+    go2res = {nt.GO:nt for nt in goea_results_all}
+
+    fout = outname + "_GO_word_genes.txt"
+    total_genes = 0
+    G = []
+
+    for word, gos in word2siggos.items():
+        # Sort first by BP, MF, CC. Sort second by GO id.
+        gos = sorted(gos, key=lambda go: [go2res[go].NS, go])
+        genes = set()
+        for go in gos:
+            genes |= go2res[go].study_items
+        genes = sorted([geneid2symbol[g] for g in genes])
+        G = G + genes
+        # print("\n{WD}: {N} study genes, {M} GOs\n".format(WD=word, N=len(genes), M=len(gos)))
+        # print("{WD} GOs: {GOs}\n".format(WD=word, GOs=", ".join(gos)))
+        for i, go in enumerate(gos):
+            res = go2res[go]
+            print("{I}) {NS} {GO} {NAME} ({N} genes)\n".format(
+                I=i, NS=res.NS, GO=go, NAME=res.name, N=res.study_count))
+
+
+        N = 10 # Number of genes per line
+        mult = [genes[i:i+N] for i in range(0, len(genes), N)]
+
+    G = list((set(G))) # Remove duplicates
+    total_genes = len(G)
+
+    G = ",".join(G)
+    print("total genes are", total_genes)
+    print("G is", G)
+
+    return total_genes, G
+
+def col_to_string(df, col):
+    if len(df) > 0:
+        s = ",".join(df[col].tolist())
+        return s
+    else:
+        return "NA"
+
+
+
+df = pd.read_csv("WS258_WB_gene_names_unique.txt", sep="\t", names=["WB","reg"])
+genes_to_GO(df,colname="WB", outname="All_ribosomal.txt", species="worm")
+
+
+
+
+
+
+
+
+
